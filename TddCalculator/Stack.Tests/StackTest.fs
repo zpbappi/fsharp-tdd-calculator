@@ -10,7 +10,7 @@ let ``Stack should be empty for empty list`` () =
 
 [<Fact>]
 let ``Stack should not be empty for non-empty list`` () =
-    ()
+    test <@ isEmpty [1; 2; 3] = false @>
 
 [<Fact>]
 let ``empty checking should work for stack of any arbitrary type`` () =
