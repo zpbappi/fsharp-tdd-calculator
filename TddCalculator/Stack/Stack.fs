@@ -3,4 +3,6 @@
 type Stack<'a> = 'a list
 
 let isEmpty (stack : Stack<'a>) =
-    true
+    match stack with 
+    | [] -> true
+    | _ -> false
