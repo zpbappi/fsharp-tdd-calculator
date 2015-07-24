@@ -7,8 +7,8 @@ let isEmpty (stack : Stack<'a>) =
     | [] -> true
     | _ -> false
 
-let push (item : 'a) (stack : Stack<'a>) =
-    []
+let push (item : 'a) (stack : Stack<'a>) : Stack<'a> =
+    item :: stack
 
-let pop (stack : Stack<'a>) =
-    (0, [])
+let pop (stack : Stack<'a>) : 'a * Stack<'a> =
+    (stack.Head, stack.Tail)
