@@ -49,3 +49,7 @@ let ``popping from single element stack returns the item and empty stack`` () =
 [<Fact>]
 let ``popping from arbitrary stack return the first item and rest of the stack`` () =
     test <@ pop [1; 2; 3] = (1, [2; 3]) @>
+
+[<Fact>]
+let ``popping from empty stack throws stack underflow exception`` () =
+    raisesWith <@ pop [] @>  (fun e -> <@ e.Message = "Stack underflow" @>)
