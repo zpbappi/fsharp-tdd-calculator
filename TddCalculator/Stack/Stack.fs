@@ -7,10 +7,10 @@ let isEmpty (stack : Stack<'a>) =
     | [] -> true
     | _ -> false
 
-let push (item : 'a) (stack : Stack<'a>) : Stack<'a> =
+let push item stack : Stack<'a> =
     item :: stack
 
-let pop (stack : Stack<'a>) : 'a * Stack<'a> =
+let pop (stack : Stack<'a>) =
     match stack with
     | [] -> raise (invalidOp "Stack underflow")
     | top::rest -> (top, rest)
