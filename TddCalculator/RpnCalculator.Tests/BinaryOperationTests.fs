@@ -1,13 +1,9 @@
-﻿module RpnCalculatorTests
+﻿module RpnCalculator.BinaryOperationsTests
 
 open Xunit
 open Swensen.Unquote
 
 open RpnCalculator
-
-[<Fact>]
-let ``calculation on empty stack results in zero`` () =
-    test <@ calculate [] = 0 @>
 
 [<Fact>]
 let ``should be able to add two numbers from stack`` () =

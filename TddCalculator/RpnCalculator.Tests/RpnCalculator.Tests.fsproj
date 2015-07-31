@@ -60,7 +60,8 @@
   </Target>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Compile Include="RpnCalculatorTests.fs" />
+    <Compile Include="BinaryOperationTests.fs" />
+    <Compile Include="TrivialTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stack\Stack.fsproj">
