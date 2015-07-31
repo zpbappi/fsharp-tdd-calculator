@@ -1,4 +1,4 @@
-﻿module RpnCalculator.TrivialTests
+﻿module RpnCalculatorTests.Trivial
 
 open Xunit
 open Swensen.Unquote

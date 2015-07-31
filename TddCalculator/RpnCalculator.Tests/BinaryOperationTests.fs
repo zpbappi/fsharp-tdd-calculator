@@ -1,4 +1,4 @@
-﻿module RpnCalculator.BinaryOperationsTests
+﻿module RpnCalculatorTests.BinaryOperations
 
 open Xunit
 open Swensen.Unquote
