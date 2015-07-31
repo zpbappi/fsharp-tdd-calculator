@@ -1,4 +1,4 @@
-﻿module Stack.Tests
+﻿module StackTests
 
 open Xunit
 open Swensen.Unquote
