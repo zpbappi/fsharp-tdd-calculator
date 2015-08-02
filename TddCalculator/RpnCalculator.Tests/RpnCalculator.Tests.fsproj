@@ -62,6 +62,7 @@
     <Content Include="packages.config" />
     <Compile Include="BinaryOperationTests.fs" />
     <Compile Include="TrivialTests.fs" />
+    <Compile Include="ParseStringTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stack\Stack.fsproj">
