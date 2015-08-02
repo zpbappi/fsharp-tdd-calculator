@@ -6,17 +6,17 @@ open RpnTypes
 module Utility =
     open RpnTypes
 
-    let private (|IsInt|_|) (str : string) =
+    let private (|IsInt|_|) str =
         match System.Int32.TryParse(str) with
         | (success, number) when success -> Some number
         | _ -> None
 
-    let private (|IsFloat|_|) (str : string) =
+    let private (|IsFloat|_|) str =
         match System.Single.TryParse(str) with
         | (success, number) when success -> Some (float number)
         | _ -> None
 
-    let parse (str : string) : RpnItem option =
+    let parse str=
         match str with 
         | null | "" -> None
         | IsInt x -> Some (Operand (Integer x))
