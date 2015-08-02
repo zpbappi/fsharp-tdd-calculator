@@ -1,4 +1,6 @@
-﻿module internal RpnTypes
+﻿module RpnTypes
+
+open Stack
 
 type Number =
     | Integer of int
@@ -11,4 +13,7 @@ type RpnItem =
 type Operation =
     | BinaryOperation of (string * Number -> Number -> Number)
 
-
+type RpnCalculator = {
+    stack : Stack<RpnItem>
+    operations : Operation list
+}
