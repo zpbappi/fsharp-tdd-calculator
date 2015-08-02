@@ -49,6 +49,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RpnTypes.fs" />
     <Compile Include="RpnCalculator.fs" />
   </ItemGroup>
   <PropertyGroup>
