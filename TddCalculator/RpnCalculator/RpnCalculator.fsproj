@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RpnTypes.fs" />
+    <Compile Include="RpnBinaryOperations.fs" />
     <Compile Include="RpnCalculator.fs" />
   </ItemGroup>
   <PropertyGroup>

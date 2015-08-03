@@ -23,9 +23,10 @@ module Utility =
         | IsFloat f -> Some (Operand (Float f))
         | _ -> Some (Operator str)
 
+    let internal isAWholeNumber (f : float) = System.Math.Round f = f;
+
 
 let calculate (stack : Stack<string>) =
-    let x = Utility.parse "2"
     match stack with
     | [a; b; "+"] -> System.Int32.Parse(a) + System.Int32.Parse(b)
     | [a; b; "-"] -> System.Int32.Parse(a) - System.Int32.Parse(b)
