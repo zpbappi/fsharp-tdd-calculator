@@ -26,9 +26,43 @@ module Utility =
     let internal isAWholeNumber (f : float) = System.Math.Round f = f;
 
 
+let private getOperation operator =
+    match operator with
+    | "+" -> RpnBinaryOperations.add
+    | "-" -> RpnBinaryOperations.subtract
+    | "*" -> RpnBinaryOperations.multiple
+    | "/" -> RpnBinaryOperations.divide
+    | _ -> raise (invalidOp (sprintf "Unknown operator: %s" operator))
+
+let private applyBinaryOperands x y operation =
+    let act =
+        match (x, y) with
+        | Integer a, Integer b -> operation (float a) (float b)
+        | Integer a, Float b -> operation (float a) b
+        | Float a, Integer b -> operation a (float b)
+        | Float a, Float b -> operation a b
+
+    let convert res =
+        if Utility.isAWholeNumber res then Integer (int res)
+        else Float res
+
+    act |> convert
+
+let evaluateRpnExpr (stack : Stack<string>) =
+    let convertNumber str =
+        match Option.get(Utility.parse str) with
+        | Operand n -> n
+        | _ -> raise (System.Exception "should not happen")
+    
+    match stack with 
+    | [a; b; op] ->
+        let x, y = convertNumber a, convertNumber b
+        op |> getOperation |> applyBinaryOperands x y
+    | _ -> Integer 0
+
+
 let calculate (stack : Stack<string>) =
-    match stack with
-    | [a; b; "+"] -> System.Int32.Parse(a) + System.Int32.Parse(b)
-    | [a; b; "-"] -> System.Int32.Parse(a) - System.Int32.Parse(b)
-    | _ -> 0
+    match evaluateRpnExpr stack with
+    | Integer n -> n
+    | Float f -> int f
 

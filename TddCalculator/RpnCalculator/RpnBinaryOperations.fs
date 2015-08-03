@@ -1,8 +1,8 @@
-﻿module internal RpnBinaryOperations
+﻿module RpnBinaryOperations
 
-let inline add x y = x + y
-let inline subtract x y = x - y
-let inline multiple x y = x * y
+let add x y : float = x + y
+let subtract x y : float = x - y
+let multiple x y : float = x * y
 
 let divide x y : float =
     match y with
