@@ -61,8 +61,13 @@ let evaluateRpnExpr (stack : Stack<string>) =
     | _ -> Integer 0
 
 
+type RpnResult = 
+    | Float of float
+    | Integer of int
+    | Error of string
+
 let calculate (stack : Stack<string>) =
     match evaluateRpnExpr stack with
-    | Integer n -> n
-    | Float f -> int f
+    | Number.Integer n -> RpnResult.Integer n
+    | Number.Float f -> RpnResult.Float f
 

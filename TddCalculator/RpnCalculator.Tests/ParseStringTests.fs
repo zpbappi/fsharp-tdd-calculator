@@ -17,7 +17,7 @@ let ``should return nothing for empty or null strings`` () =
 [<InlineData("-1", -1)>]
 [<InlineData("-390", -390)>]
 let ``should parse interger numbers correctly`` (str : string) (num : int) =
-    test <@ Utility.parse str = Some (Operand (Integer num)) @>
+    test <@ Utility.parse str = Some (Operand (Number.Integer num)) @>
 
 [<Theory>]
 [<InlineData("1.2", 1.2f)>]
@@ -25,7 +25,7 @@ let ``should parse interger numbers correctly`` (str : string) (num : int) =
 [<InlineData("-4.2", -4.2f)>]
 [<InlineData("-1.", -1.f)>]
 let ``should parse float numbers correctly`` (str : string) (num : float) =
-    test <@ Utility.parse str = Some (Operand (Float num)) @>
+    test <@ Utility.parse str = Some (Operand (Number.Float num)) @>
 
 [<Theory>]
 [<InlineData("+")>]
