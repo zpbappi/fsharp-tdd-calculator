@@ -20,10 +20,10 @@ let ``should parse interger numbers correctly`` (str : string) (num : int) =
     test <@ Utility.parse str = Some (Operand (Number.Integer num)) @>
 
 [<Theory>]
-[<InlineData("1.2", 1.2f)>]
-[<InlineData("3.1415", 3.1415f)>]
-[<InlineData("-4.2", -4.2f)>]
-[<InlineData("-1.", -1.f)>]
+[<InlineData("1.2", 1.2)>]
+[<InlineData("3.1415", 3.1415)>]
+[<InlineData("-4.2", -4.2)>]
+[<InlineData("-1.", -1.)>]
 let ``should parse float numbers correctly`` (str : string) (num : float) =
     test <@ Utility.parse str = Some (Operand (Number.Float num)) @>
 

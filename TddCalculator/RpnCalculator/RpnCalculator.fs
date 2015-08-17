@@ -12,8 +12,8 @@ module Utility =
         | _ -> None
 
     let private (|IsFloat|_|) str =
-        match System.Single.TryParse(str) with
-        | (success, number) when success -> Some (float number)
+        match System.Double.TryParse(str) with
+        | (success, number) when success -> Some number
         | _ -> None
 
     let parse str=
@@ -30,7 +30,7 @@ let private getOperation operator =
     match operator with
     | "+" -> RpnBinaryOperations.add
     | "-" -> RpnBinaryOperations.subtract
-    | "*" -> RpnBinaryOperations.multiple
+    | "*" -> RpnBinaryOperations.multiply
     | "/" -> RpnBinaryOperations.divide
     | _ -> raise (invalidOp (sprintf "Unknown operator: %s" operator))
 
@@ -62,12 +62,12 @@ let evaluateRpnExpr (stack : Stack<string>) =
 
 
 type RpnResult = 
-    | Float of float
-    | Integer of int
+    | FloatResult of float
+    | IntegerResult of int
     | Error of string
 
 let calculate (stack : Stack<string>) =
     match evaluateRpnExpr stack with
-    | Number.Integer n -> RpnResult.Integer n
-    | Number.Float f -> RpnResult.Float f
+    | Number.Integer n -> RpnResult.IntegerResult n
+    | Number.Float f -> RpnResult.FloatResult f
 
