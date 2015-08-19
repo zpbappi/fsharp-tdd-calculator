@@ -4,7 +4,7 @@ open Stack
 
 type Number =
     | Integer of int
-    | Float of float
+    | Decimal of decimal
 
 type RpnItem = 
     | Operand of Number

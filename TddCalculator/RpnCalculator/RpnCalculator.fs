@@ -11,19 +11,19 @@ module Utility =
         | (success, number) when success -> Some number
         | _ -> None
 
-    let private (|IsFloat|_|) str =
-        match System.Double.TryParse(str) with
+    let private (|IsDecimal|_|) str =
+        match System.Decimal.TryParse(str) with
         | (success, number) when success -> Some number
         | _ -> None
 
-    let parse str=
+    let parse str =
         match str with 
         | null | "" -> None
         | IsInt x -> Some (Operand (Integer x))
-        | IsFloat f -> Some (Operand (Float f))
+        | IsDecimal d -> Some (Operand (Decimal d))
         | _ -> Some (Operator str)
 
-    let internal isAWholeNumber (f : float) = System.Math.Round f = f;
+    let internal isAWholeNumber (d : decimal) = System.Math.Round d = d;
 
 
 let private getOperation operator =
@@ -37,14 +37,14 @@ let private getOperation operator =
 let private applyBinaryOperands x y operation =
     let act =
         match (x, y) with
-        | Integer a, Integer b -> operation (float a) (float b)
-        | Integer a, Float b -> operation (float a) b
-        | Float a, Integer b -> operation a (float b)
-        | Float a, Float b -> operation a b
+        | Integer a, Integer b -> operation (decimal a) (decimal b)
+        | Integer a, Decimal b -> operation (decimal a) b
+        | Decimal a, Integer b -> operation a (decimal b)
+        | Decimal a, Decimal b -> operation a b
 
     let convert res =
         if Utility.isAWholeNumber res then Integer (int res)
-        else Float res
+        else Decimal res
 
     act |> convert
 
@@ -62,12 +62,12 @@ let evaluateRpnExpr (stack : Stack<string>) =
 
 
 type RpnResult = 
-    | Float of float
-    | Integer of int
+    | DecimalResult of decimal
+    | IntegerResult of int
     | Error of string
 
 let calculate (stack : Stack<string>) =
     match evaluateRpnExpr stack with
-    | Number.Integer n -> RpnResult.Integer n
-    | Number.Float f -> RpnResult.Float f
+    | Integer n -> IntegerResult n
+    | Decimal d -> DecimalResult d
 
