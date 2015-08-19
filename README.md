@@ -11,3 +11,7 @@ creating the basic solution structure and creating a generic stack.
 2. [Part-2](http://zpbappi.com/simple-calculator-using-tdd-in-fsharp-part-2/), 
 creating the a calculator that operates on Reverse Polish Notation.
 Only managed to get two integer operands working in this part.
+3. [Part-3](http://zpbappi.com/simple-calculator-using-tdd-in-fsharp-part-3/),
+correcting the previous mistakes, updating the Rpn calculator to work with 
+more than two operands of any kind (int or decimal) with any binary operator
+known to the calculator.
