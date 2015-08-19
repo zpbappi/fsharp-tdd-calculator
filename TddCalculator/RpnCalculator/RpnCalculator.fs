@@ -48,19 +48,16 @@ let private applyBinaryOperands x y operation =
 
     act |> convert
 
-let evaluateRpnExpr (stack : Stack<string>) =
-    let convertNumber str =
-        match Option.get(Utility.parse str) with
-        | Operand n -> n
-        | _ -> raise (System.Exception "should not happen")
-    
-    match stack with 
-    | [a] -> convertNumber a
-    | [a; b; op] ->
-        let x, y = convertNumber a, convertNumber b
-        op |> getOperation |> applyBinaryOperands x y
-    | _ -> Integer 0
-
+let private evaluateRpnExpr state item =
+    match item with
+    | Operand x -> push x state
+    | Operator op ->
+        let (y, s1) = pop state
+        let (x, s2) = pop s1
+        let res = op 
+                |> getOperation
+                |> applyBinaryOperands x y
+        push res s2
 
 type RpnResult = 
     | DecimalResult of decimal
@@ -68,7 +65,19 @@ type RpnResult =
     | Error of string
 
 let calculate (stack : Stack<string>) =
-    match evaluateRpnExpr stack with
-    | Integer n -> IntegerResult n
-    | Decimal d -> DecimalResult d
+    let result = stack 
+                |> List.map Utility.parse 
+                |> List.filter Option.isSome 
+                |> List.map Option.get
+                |> List.fold evaluateRpnExpr []
+
+    let resultConverter res =
+        match res with 
+        | Integer n -> IntegerResult n
+        | Decimal d -> DecimalResult d
+
+    match result with
+    | [] -> IntegerResult 0
+    | [n] -> resultConverter n
+    | _ -> Error "Why! why!! why!!!"
 
