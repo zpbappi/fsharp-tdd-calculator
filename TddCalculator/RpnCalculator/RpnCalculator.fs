@@ -55,6 +55,7 @@ let evaluateRpnExpr (stack : Stack<string>) =
         | _ -> raise (System.Exception "should not happen")
     
     match stack with 
+    | [a] -> convertNumber a
     | [a; b; op] ->
         let x, y = convertNumber a, convertNumber b
         op |> getOperation |> applyBinaryOperands x y
