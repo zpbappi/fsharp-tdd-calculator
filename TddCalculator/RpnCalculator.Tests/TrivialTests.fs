@@ -7,4 +7,4 @@ open RpnCalculator
 
 [<Fact>]
 let ``calculation on empty stack results in zero`` () =
-    test <@ calculate [] = IntegerResult 0 @>
+    test <@ calculate [] = Integer 0 @>
