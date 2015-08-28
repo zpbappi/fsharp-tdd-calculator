@@ -61,6 +61,17 @@ module RpnCalculator =
             Stack.push res s2
 
 
+    let createInstance = 
+        {
+            operations = 
+            [
+                BinaryOperation ("+", RpnBinaryOperations.add)
+                BinaryOperation ("-", RpnBinaryOperations.subtract)
+                BinaryOperation ("*", RpnBinaryOperations.multiply)
+                BinaryOperation ("/", RpnBinaryOperations.divide)
+            ]
+        }
+
     let calculate (stack : Stack<string>) =
         let result = stack 
                     |> List.map Utility.parse 
