@@ -2,8 +2,8 @@
 
 open Xunit
 open Swensen.Unquote
-open RpnTypes
 open RpnCalculator
+open RpnCalculator.RpnTypes
 
 [<Fact>]
 let ``should return nothing for empty or null strings`` () =
