@@ -78,6 +78,9 @@ module RpnCalculator =
     let registerBinaryOperation operator operation calculator =
         { operations = BinaryOperation(operator, operation) :: calculator.operations }
 
+    let registerUnaryOperation operator operation calculator =
+        calculator
+
     let calculate (stack : Stack<string>) calculator =
         let (_, result) = stack 
                         |> List.map Utility.parse 

@@ -65,6 +65,7 @@
     <Compile Include="ParseStringTests.fs" />
     <Compile Include="MultiOperandsBinaryOperationTests.fs" />
     <Compile Include="RegisterBinaryOperationTest.fs" />
+    <Compile Include="RegisterUnaryOperationTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stack\Stack.fsproj">
