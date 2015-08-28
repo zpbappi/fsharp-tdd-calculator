@@ -15,3 +15,6 @@ Only managed to get two integer operands working in this part.
 correcting the previous mistakes, updating the Rpn calculator to work with 
 more than two operands of any kind (int or decimal) with any binary operator
 known to the calculator.
+4. [Part-4](http://zpbappi.com/simple-calculator-using-tdd-in-fsharp-part-4/),
+Organizing modules and namespaces, adding support for both binary and unary operations,
+support for adding new operations externally.
