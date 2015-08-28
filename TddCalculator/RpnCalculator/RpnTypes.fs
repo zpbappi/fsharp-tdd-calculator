@@ -12,11 +12,10 @@ module RpnTypes =
         | Operator of string
 
     type Operation =
-        | BinaryOperation of (string * Number -> Number -> Number)
+        | BinaryOperation of string * (decimal -> decimal -> decimal)
 
 
 type RpnCalculator = {
-    stack : Stack<RpnTypes.RpnItem>
     operations : RpnTypes.Operation list
 }
 
