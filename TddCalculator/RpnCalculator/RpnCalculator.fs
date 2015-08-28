@@ -39,8 +39,9 @@ module RpnCalculator =
         | None -> raise (invalidOp (sprintf "Unknown operator: %s" operator))
         
     let private operandConversion number =
-        if Utility.isAWholeNumber number then Integer (int number)
-            else Decimal number
+        let (maxInt, minInt) = decimal System.Int32.MaxValue, decimal System.Int32.MinValue
+        if number <= maxInt && number >= minInt && Utility.isAWholeNumber number then Integer (int number)
+        else Decimal number
 
     let private applyBinaryOperands x y operation =
         match (x, y) with
