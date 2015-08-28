@@ -32,36 +32,48 @@ module RpnCalculator =
         let operatorMatch operation =
             match operation with
             | BinaryOperation(op, _) -> op = operator
+            | UnaryOperation(op, _) -> op = operator
             
         match List.tryFind operatorMatch calculator.operations with
-        | Some (BinaryOperation (_, operation)) -> operation
+        | Some op -> op
         | None -> raise (invalidOp (sprintf "Unknown operator: %s" operator))
         
+    let private operandConversion number =
+        if Utility.isAWholeNumber number then Integer (int number)
+            else Decimal number
 
     let private applyBinaryOperands x y operation =
-        let act =
-            match (x, y) with
-            | Integer a, Integer b -> operation (decimal a) (decimal b)
-            | Integer a, Decimal b -> operation (decimal a) b
-            | Decimal a, Integer b -> operation a (decimal b)
-            | Decimal a, Decimal b -> operation a b
+        match (x, y) with
+        | Integer a, Integer b -> operation (decimal a) (decimal b)
+        | Integer a, Decimal b -> operation (decimal a) b
+        | Decimal a, Integer b -> operation a (decimal b)
+        | Decimal a, Decimal b -> operation a b
 
-        let convert res =
-            if Utility.isAWholeNumber res then Integer (int res)
-            else Decimal res
+    let private applyUnaryOperands x operation =
+        match x with
+        | Integer a -> operation (decimal a)
+        | Decimal a -> operation a
 
-        act |> convert
+    let private applyOperation stack operation =
+        let (st, res) = match operation with
+                            | BinaryOperation (_, op) -> 
+                                let (y, s1) = Stack.pop stack
+                                let (x, s2) = Stack.pop s1
+                                (s2, applyBinaryOperands x y op)
+                            | UnaryOperation (_, op) ->
+                                let (x, s1) = Stack.pop stack
+                                (s1, applyUnaryOperands x op)
+
+        Stack.push (res |> operandConversion) st
 
     let private evaluateRpnExpr (calculator, stack) item =
         match item with
         | Operand x -> (calculator, Stack.push x stack)
         | Operator op ->
-            let (y, s1) = Stack.pop stack
-            let (x, s2) = Stack.pop s1
-            let res = op 
-                    |> getOperation calculator
-                    |> applyBinaryOperands x y
-            (calculator, Stack.push res s2)
+            let resStack = op 
+                        |> getOperation calculator
+                        |> applyOperation stack
+            (calculator, resStack)
 
 
     let createInstance ()= 
@@ -79,7 +91,7 @@ module RpnCalculator =
         { operations = BinaryOperation(operator, operation) :: calculator.operations }
 
     let registerUnaryOperation operator operation calculator =
-        calculator
+        { operations = UnaryOperation(operator, operation) :: calculator.operations }
 
     let calculate (stack : Stack<string>) calculator =
         let (_, result) = stack 
