@@ -50,14 +50,14 @@ let private applyBinaryOperands x y operation =
 
 let private evaluateRpnExpr state item =
     match item with
-    | Operand x -> push x state
+    | Operand x -> Stack.push x state
     | Operator op ->
-        let (y, s1) = pop state
-        let (x, s2) = pop s1
+        let (y, s1) = Stack.pop state
+        let (x, s2) = Stack.pop s1
         let res = op 
                 |> getOperation
                 |> applyBinaryOperands x y
-        push res s2
+        Stack.push res s2
 
 type RpnResult = 
     | DecimalResult of decimal
