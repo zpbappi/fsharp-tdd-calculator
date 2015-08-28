@@ -21,4 +21,6 @@ let ``should produce proper result for multiple operators`` (stackedString : str
     let trim (str : string) = str.Trim()
     let stack = stackedString.Split(',') |> Array.toList |> List.map trim
 
-    test <@ RpnCalculator.calculate stack = res @>
+    let calc = RpnCalculator.createInstance()
+
+    test <@ RpnCalculator.calculate stack calc = res @>

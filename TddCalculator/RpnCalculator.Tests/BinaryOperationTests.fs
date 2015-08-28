@@ -7,7 +7,8 @@ open RpnCalculator
 
 [<Fact>]
 let ``should be able to add two numbers from stack`` () =
-    test <@ RpnCalculator.calculate ["1"; "1"; "+"] = IntegerResult 2 @>
+    let calc = RpnCalculator.createInstance()
+    test <@ RpnCalculator.calculate ["1"; "1"; "+"] calc = IntegerResult 2 @>
 
 [<Theory>]
 [<InlineData("1", "1", 2)>]
@@ -15,11 +16,13 @@ let ``should be able to add two numbers from stack`` () =
 [<InlineData("1", "2", 3)>]
 [<InlineData("40", "2", 42)>]
 let ``should be able to add any arbitrary two integers`` (x : string) (y : string) (res: int) =
-    test <@ RpnCalculator.calculate [x; y; "+"] = IntegerResult res @>
+    let calc = RpnCalculator.createInstance()
+    test <@ RpnCalculator.calculate [x; y; "+"] calc = IntegerResult res @>
 
 [<Fact>]
 let ``should be able to subtract two numbers`` () =
-    test <@ RpnCalculator.calculate ["2"; "1"; "-"] = IntegerResult 1 @>
+    let calc = RpnCalculator.createInstance()
+    test <@ RpnCalculator.calculate ["2"; "1"; "-"] calc = IntegerResult 1 @>
 
 [<Theory>]
 [<InlineData("1", "1", 0)>]
@@ -27,7 +30,8 @@ let ``should be able to subtract two numbers`` () =
 [<InlineData("42", "2", 40)>]
 [<InlineData("6", "9", -3)>]
 let ``should be able to stract two arbitrary integers`` (x : string) (y : string) (res : int) =
-    test <@ RpnCalculator.calculate [x; y; "-"] = IntegerResult res @>
+    let calc = RpnCalculator.createInstance()
+    test <@ RpnCalculator.calculate [x; y; "-"] calc = IntegerResult res @>
 
 
 [<Theory>]
@@ -43,4 +47,5 @@ let ``should be able to handle int and float operands`` (x : string) (y : string
     let (|IsDecimal|_|) x = match System.Decimal.TryParse(x) with | (s, v) when s -> Some v | _ -> None
     let res = match resVal with | IsInt n-> IntegerResult n | IsDecimal d -> DecimalResult d | _ -> raise(System.Exception("Unknown"))
 
-    test <@ RpnCalculator.calculate [x; y; operator] = res @>
+    let calc = RpnCalculator.createInstance()
+    test <@ RpnCalculator.calculate [x; y; operator] calc = res @>

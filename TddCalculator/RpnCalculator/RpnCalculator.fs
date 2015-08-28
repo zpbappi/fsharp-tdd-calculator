@@ -75,8 +75,7 @@ module RpnCalculator =
             ]
         }
 
-    let calculate (stack : Stack<string>) =
-        let calculator = createInstance ()
+    let calculate (stack : Stack<string>) calculator =
         let (_, result) = stack 
                         |> List.map Utility.parse 
                         |> List.filter Option.isSome 
