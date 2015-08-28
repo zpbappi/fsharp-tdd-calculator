@@ -13,6 +13,7 @@ module RpnTypes =
 
     type Operation =
         | BinaryOperation of string * (decimal -> decimal -> decimal)
+        | UnaryOperation of string * (decimal -> decimal)
 
 
 type RpnCalculator = {
