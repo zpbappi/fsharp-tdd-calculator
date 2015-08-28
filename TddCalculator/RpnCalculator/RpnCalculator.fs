@@ -27,7 +27,7 @@ module Utility =
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module RpnCalculator =
-    let private getOperation operator =
+    let private getOperation calculator operator =
         match operator with
         | "+" -> RpnBinaryOperations.add
         | "-" -> RpnBinaryOperations.subtract
@@ -49,16 +49,16 @@ module RpnCalculator =
 
         act |> convert
 
-    let private evaluateRpnExpr state item =
+    let private evaluateRpnExpr (calculator, stack) item =
         match item with
-        | Operand x -> Stack.push x state
+        | Operand x -> (calculator, Stack.push x stack)
         | Operator op ->
-            let (y, s1) = Stack.pop state
+            let (y, s1) = Stack.pop stack
             let (x, s2) = Stack.pop s1
             let res = op 
-                    |> getOperation
+                    |> getOperation calculator
                     |> applyBinaryOperands x y
-            Stack.push res s2
+            (calculator, Stack.push res s2)
 
 
     let createInstance = 
@@ -73,11 +73,11 @@ module RpnCalculator =
         }
 
     let calculate (stack : Stack<string>) =
-        let result = stack 
-                    |> List.map Utility.parse 
-                    |> List.filter Option.isSome 
-                    |> List.map Option.get
-                    |> List.fold evaluateRpnExpr []
+        let (_, result) = stack 
+                        |> List.map Utility.parse 
+                        |> List.filter Option.isSome 
+                        |> List.map Option.get
+                        |> List.fold evaluateRpnExpr (null, [])
 
         let resultConverter res =
             match res with 
